@@ -245,7 +245,9 @@ gulp.task(
 
 gulp.task(
   'website:static',
-  gulp.series('dist:min', 'css',
+  gulp.series(
+    'dist:min',
+    'css',
     gulp.parallel(function() {
       return gulp
         .src(paths.dist + '/Draft.min.js')
@@ -256,7 +258,7 @@ gulp.task(
         .src(paths.dist + '/Draft.css')
         .pipe(gulp.dest(paths.static + '/css'));
     }),
-  )
+  ),
 );
 
 gulp.task(
@@ -276,7 +278,7 @@ gulp.task(
 gulp.task(
   'dev',
   gulp.series(function() {
-    gulp.watch(paths.src, ['modules', 'dist']);
+    gulp.watch(paths.src, gulp.parallel('modules', 'dist'));
   }),
 );
 
