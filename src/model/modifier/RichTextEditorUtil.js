@@ -48,7 +48,15 @@ const RichTextEditorUtil = {
       .getType();
   },
 
-  getDataObjectForLinkURL: function(uri: URI): Object {
+  getCurrentBlockData: function(editorState: EditorState): Map<any, any> {
+    var selection = editorState.getSelection();
+    return editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getData();
+  },
+
+  getDataObjectForLinkURL: function(uri: URI): DataObjectForLink {
     return {url: uri.toString()};
   },
 

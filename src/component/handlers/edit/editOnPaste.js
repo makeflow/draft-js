@@ -28,7 +28,10 @@ var RichTextEditorUtil = require('RichTextEditorUtil');
 var getEntityKeyForSelection = require('getEntityKeyForSelection');
 var getTextContentFromFiles = require('getTextContentFromFiles');
 const isEventHandled = require('isEventHandled');
+const Immutable = require('immutable');
 var splitTextIntoTextBlocks = require('splitTextIntoTextBlocks');
+
+const {OrderedMap} = Immutable;
 
 /**
  * Paste content.
@@ -116,7 +119,7 @@ function editOnPaste(editor: DraftEditor, e: SyntheticClipboardEvent<>): void {
     // stripped during comparison -- this is because copy/paste within the
     // editor in Firefox and IE will not include empty lines. The resulting
     // paste will preserve the newlines correctly.
-    const internalClipboard = editor.getClipboard();
+    var internalClipboard = editor.getClipboard();
     if (data.isRichText() && internalClipboard) {
       if (
         // If the editorKey is present in the pasted HTML, it should be safe to
@@ -129,6 +132,18 @@ function editOnPaste(editor: DraftEditor, e: SyntheticClipboardEvent<>): void {
           internalClipboard.size === 1 &&
           internalClipboard.first().getText() === text)
       ) {
+        if (internalClipboard.size === 1) {
+          var currentBlockData = RichTextEditorUtil.getCurrentBlockData(
+            editorState,
+          );
+
+          var headBlock = internalClipboard.toArray().shift();
+
+          internalClipboard = new OrderedMap({
+            [headBlock.getKey()]: headBlock.merge({data: currentBlockData}),
+          });
+        }
+
         editor.update(
           insertFragment(editor._latestEditorState, internalClipboard),
         );
@@ -157,8 +172,19 @@ function editOnPaste(editor: DraftEditor, e: SyntheticClipboardEvent<>): void {
       );
       if (htmlFragment) {
         const {contentBlocks, entityMap} = htmlFragment;
-        if (contentBlocks) {
-          var htmlMap = BlockMapBuilder.createFromArray(contentBlocks);
+
+        if (contentBlocks && contentBlocks.length) {
+          var currentBlockData = RichTextEditorUtil.getCurrentBlockData(
+            editorState,
+          );
+
+          var headBlock = contentBlocks[0].merge({data: currentBlockData});
+
+          var htmlMap = BlockMapBuilder.createFromArray([
+            headBlock,
+            ...contentBlocks.slice(1),
+          ]);
+
           editor.update(
             insertFragment(editor._latestEditorState, htmlMap, entityMap),
           );
@@ -183,13 +209,20 @@ function editOnPaste(editor: DraftEditor, e: SyntheticClipboardEvent<>): void {
 
     var currentBlockType = RichTextEditorUtil.getCurrentBlockType(editorState);
 
+    var currentBlockData = RichTextEditorUtil.getCurrentBlockData(editorState);
+
     var textFragment = DraftPasteProcessor.processText(
       textBlocks,
       character,
       currentBlockType,
     );
 
-    var textMap = BlockMapBuilder.createFromArray(textFragment);
+    var headBlock = textFragment[0].merge({data: currentBlockData});
+
+    var textMap = BlockMapBuilder.createFromArray([
+      headBlock,
+      ...textFragment.slice(1),
+    ]);
     editor.update(insertFragment(editor._latestEditorState, textMap));
   }
 }
