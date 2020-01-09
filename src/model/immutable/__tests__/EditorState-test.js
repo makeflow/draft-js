@@ -10,17 +10,16 @@
 
 'use strict';
 
-jest.disableAutomock();
-
 const CharacterMetadata = require('CharacterMetadata');
 const ContentBlock = require('ContentBlock');
 const ContentState = require('ContentState');
 const DraftModifier = require('DraftModifier');
 const EditorState = require('EditorState');
-const Immutable = require('immutable');
 const RichTextEditorUtil = require('RichTextEditorUtil');
 const {BOLD, ITALIC} = require('SampleDraftInlineStyle');
 const SelectionState = require('SelectionState');
+
+const Immutable = require('immutable');
 
 const {List, Repeat} = Immutable;
 

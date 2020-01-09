@@ -10,11 +10,10 @@
 
 'use strict';
 
-jest.disableAutomock();
-
 jest.mock('generateRandomKey');
 
 const DraftPasteProcessor = require('DraftPasteProcessor');
+
 const Immutable = require('immutable');
 
 const {OrderedSet, Map} = Immutable;

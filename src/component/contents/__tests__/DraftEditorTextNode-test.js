@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.disableAutomock().mock('UserAgent');
+jest.mock('UserAgent');
 
 const BLOCK_DELIMITER_CHAR = '\n';
 const TEST_A = 'Hello';
@@ -34,10 +34,16 @@ const renderIntoContainer = element => {
 };
 
 const initializeAsIE = () => {
+  /* $FlowFixMe(>=0.99.0 site=www) This comment suppresses an error found when
+   * Flow v0.47 was deployed. To see the error delete this comment and run
+   * Flow. */
   UserAgent.isBrowser.mockImplementation(() => true);
 };
 
 const initializeAsNonIE = () => {
+  /* $FlowFixMe(>=0.99.0 site=www) This comment suppresses an error found when
+   * Flow v0.47 was deployed. To see the error delete this comment and run
+   * Flow. */
   UserAgent.isBrowser.mockImplementation(() => false);
 };
 
