@@ -243,12 +243,12 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
       ].forEach(propName => {
         if (props.hasOwnProperty(propName)) {
           // eslint-disable-next-line no-console
-          console.warn(
-            `Supplying an \`${propName}\` prop to \`DraftEditor\` has ` +
-              'been deprecated. If your handler needs access to the keyboard ' +
-              'event, supply a custom `keyBindingFn` prop that falls back to ' +
-              'the default one (eg. https://is.gd/RG31RJ).',
-          );
+          // console.warn(
+          //   `Supplying an \`${propName}\` prop to \`DraftEditor\` has ` +
+          //     'been deprecated. If your handler needs access to the keyboard ' +
+          //     'event, supply a custom `keyBindingFn` prop that falls back to ' +
+          //     'the default one (eg. https://is.gd/RG31RJ).',
+          // );
         }
       });
     }
