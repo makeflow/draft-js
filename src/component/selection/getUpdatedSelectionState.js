@@ -58,6 +58,10 @@ function getUpdatedSelectionState(
       'leaves',
       focusPath.leafKey,
     ]);
+	
+  if (!anchorLeaf || !focusLeaf) {
+    return selection;
+  }
 
   var anchorLeafStart: number = anchorLeaf.get('start');
   var focusLeafStart: number = focusLeaf.get('start');
