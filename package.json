@@ -1,7 +1,7 @@
 {
   "name": "@makeflow/draft-js",
   "description": "A React framework for building text editors.",
-  "version": "0.10.5-patch.1",
+  "version": "0.10.5-patch.6",
   "keywords": [
     "draftjs",
     "editor",
@@ -59,7 +59,7 @@
     "eslint-plugin-relay": "^0.0.8",
     "fbjs-scripts": "^0.8.0",
     "flow-bin": "^0.59.0",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-browserify-thin": "^0.1.5",
     "gulp-clean-css": "^2.0.3",
