@@ -13,10 +13,10 @@
 
 'use strict';
 
-import type {BlockNodeRecord} from 'BlockNodeRecord';
-import type {DraftBlockRenderMap} from 'DraftBlockRenderMap';
-import type {DraftInlineStyle} from 'DraftInlineStyle';
-import type {BidiDirection} from 'UnicodeBidiDirection';
+import type { BlockNodeRecord } from 'BlockNodeRecord';
+import type { DraftBlockRenderMap } from 'DraftBlockRenderMap';
+import type { DraftInlineStyle } from 'DraftInlineStyle';
+import type { BidiDirection } from 'UnicodeBidiDirection';
 
 const DraftEditorBlock = require('DraftEditorBlock.react');
 const DraftOffsetKey = require('DraftOffsetKey');
@@ -29,13 +29,14 @@ const nullthrows = require('nullthrows');
 
 type Props = {
   blockRenderMap: DraftBlockRenderMap,
-  blockRendererFn: (block: BlockNodeRecord) => ?Object,
+  blockRendererFn: (block: BlockNodeRecord) =>?Object,
   blockStyleFn?: (block: BlockNodeRecord) => string,
-  customStyleFn?: (style: DraftInlineStyle, block: BlockNodeRecord) => ?Object,
+  customStyleFn?: (style: DraftInlineStyle, block: BlockNodeRecord) =>?Object,
   customStyleMap?: Object,
   editorKey?: string,
   editorState: EditorState,
   textDirectionality?: BidiDirection,
+  alwaysUpdateContents?: boolean,
 };
 
 /**
@@ -76,6 +77,10 @@ const getListItemClasses = (
  */
 class DraftEditorContents extends React.Component<Props> {
   shouldComponentUpdate(nextProps: Props): boolean {
+    if (nextProps.alwaysUpdateContents) {
+      return true;
+    }
+
     const prevEditorState = this.props.editorState;
     const nextEditorState = nextProps.editorState;
 
@@ -244,7 +249,7 @@ class DraftEditorContents extends React.Component<Props> {
 
     // Group contiguous runs of blocks that have the same wrapperTemplate
     const outputBlocks = [];
-    for (let ii = 0; ii < processedBlocks.length; ) {
+    for (let ii = 0; ii < processedBlocks.length;) {
       const info: any = processedBlocks[ii];
       if (info.wrapperTemplate) {
         const blocks = [];

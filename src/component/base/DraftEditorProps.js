@@ -13,16 +13,16 @@
 
 'use strict';
 
-import type {BlockNodeRecord} from 'BlockNodeRecord';
-import type {DraftBlockRenderMap} from 'DraftBlockRenderMap';
-import type {DraftDragType} from 'DraftDragType';
-import type {DraftEditorCommand} from 'DraftEditorCommand';
-import type {DraftHandleValue} from 'DraftHandleValue';
-import type {DraftInlineStyle} from 'DraftInlineStyle';
-import type {DraftTextAlignment} from 'DraftTextAlignment';
+import type { BlockNodeRecord } from 'BlockNodeRecord';
+import type { DraftBlockRenderMap } from 'DraftBlockRenderMap';
+import type { DraftDragType } from 'DraftDragType';
+import type { DraftEditorCommand } from 'DraftEditorCommand';
+import type { DraftHandleValue } from 'DraftHandleValue';
+import type { DraftInlineStyle } from 'DraftInlineStyle';
+import type { DraftTextAlignment } from 'DraftTextAlignment';
 import type EditorState from 'EditorState';
 import type SelectionState from 'SelectionState';
-import type {BidiDirection} from 'UnicodeBidiDirection';
+import type { BidiDirection } from 'UnicodeBidiDirection';
 
 export type DraftEditorProps = {
   /**
@@ -60,7 +60,7 @@ export type DraftEditorProps = {
   // For a given `ContentBlock` object, return an object that specifies
   // a custom block component and/or props. If no object is returned,
   // the default `DraftEditorBlock` is used.
-  blockRendererFn: (block: BlockNodeRecord) => ?Object,
+  blockRendererFn: (block: BlockNodeRecord) =>?Object,
 
   // Function that returns a cx map corresponding to block-level styles.
   blockStyleFn: (block: BlockNodeRecord) => string,
@@ -68,7 +68,7 @@ export type DraftEditorProps = {
   // A function that accepts a synthetic key event and returns
   // the matching DraftEditorCommand constant, or a custom string,
   // or null if no command should be invoked.
-  keyBindingFn: (e: SyntheticKeyboardEvent<>) => ?string,
+  keyBindingFn: (e: SyntheticKeyboardEvent<>) =>?string,
 
   // Set whether the `DraftEditor` component should be editable. Useful for
   // temporarily disabling edit behavior or allowing `DraftEditor` rendering
@@ -171,19 +171,21 @@ export type DraftEditorProps = {
 
   // Provide a function that will construct CSS style objects given inline
   // style names.
-  customStyleFn?: (style: DraftInlineStyle, block: BlockNodeRecord) => ?Object,
+  customStyleFn?: (style: DraftInlineStyle, block: BlockNodeRecord) =>?Object,
 
   // Provide a map of block rendering configurations. Each block type maps to
   // an element tag and an optional react element wrapper. This configuration
   // is used for both rendering and paste processing.
   blockRenderMap: DraftBlockRenderMap,
+  // `alwaysUpdateContents` = true will always update DraftEditorContents
+  alwaysUpdateContents?: boolean,
 };
 
 export type DraftEditorDefaultProps = {
   blockRenderMap: DraftBlockRenderMap,
-  blockRendererFn: (block: BlockNodeRecord) => ?Object,
+  blockRendererFn: (block: BlockNodeRecord) =>?Object,
   blockStyleFn: (block: BlockNodeRecord) => string,
-  keyBindingFn: (e: SyntheticKeyboardEvent<>) => ?string,
+  keyBindingFn: (e: SyntheticKeyboardEvent<>) =>?string,
   readOnly: boolean,
   spellCheck: boolean,
   stripPastedStyles: boolean,

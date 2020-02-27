@@ -58,7 +58,7 @@ function getUpdatedSelectionState(
       'leaves',
       focusPath.leafKey,
     ]);
-	
+
   if (!anchorLeaf || !focusLeaf) {
     return selection;
   }
