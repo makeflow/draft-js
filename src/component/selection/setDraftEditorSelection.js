@@ -293,9 +293,15 @@ function addFocusToSelection(
         ),
         selectionState: JSON.stringify(selectionState.toJS(), null, 2),
       });
-      // allow the error to be thrown -
-      // better than continuing in a broken state
-      throw e;
+      // Prevent crash on Firefox @ 2020/03/03
+      // Origin author says crash is better than continue
+      // in a broken state, but maybe selection state
+      // broken isn't a issue?
+      if (navigator.product !== 'Gecko') {
+        throw e;
+      } else {
+        console.warn('Ignored error on Gecko: selection extend failed', e);
+      }
     }
   } else {
     // IE doesn't support extend. This will mean no backward selection.
