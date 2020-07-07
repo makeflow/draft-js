@@ -14,10 +14,10 @@
 
 'use strict';
 
-import type { BlockMap } from 'BlockMap';
-import type { DraftEditorModes } from 'DraftEditorModes';
-import type { DraftEditorDefaultProps, DraftEditorProps } from 'DraftEditorProps';
-import type { DraftScrollPosition } from 'DraftScrollPosition';
+import type {BlockMap} from 'BlockMap';
+import type {DraftEditorModes} from 'DraftEditorModes';
+import type {DraftEditorDefaultProps, DraftEditorProps} from 'DraftEditorProps';
+import type {DraftScrollPosition} from 'DraftScrollPosition';
 
 const DefaultDraftBlockRenderMap = require('DefaultDraftBlockRenderMap');
 const DefaultDraftInlineStyle = require('DefaultDraftInlineStyle');
@@ -120,7 +120,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
   exitCurrentMode: () => void;
   restoreEditorDOM: (scrollPosition?: DraftScrollPosition) => void;
   setClipboard: (clipboard: ?BlockMap) => void;
-  getClipboard: () =>?BlockMap;
+  getClipboard: () => ?BlockMap;
   getEditorKey: () => string;
   update: (editorState: EditorState) => void;
   onDragEnter: () => void;
@@ -162,7 +162,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
     this.getEditorKey = () => this._editorKey;
 
     // See `restoreEditorDOM()`.
-    this.state = { contentsKey: 0 };
+    this.state = {contentsKey: 0};
   }
 
   /**
@@ -171,7 +171,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
    * editor mode, if any has been specified.
    */
   _buildHandler(eventName: string): Function {
-    return e => {
+    return (e) => {
       if (!this.props.readOnly) {
         const method = this._handler && this._handler[eventName];
         method && method(this, e);
@@ -258,7 +258,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
         {this._renderPlaceholder()}
         <div
           className={cx('DraftEditor/editorContainer')}
-          ref={ref => (this.editorContainer = ref)}>
+          ref={(ref) => (this.editorContainer = ref)}>
           <div
             aria-activedescendant={
               readOnly ? null : this.props.ariaActiveDescendantID
@@ -305,7 +305,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
             onMouseUp={this._onMouseUp}
             onPaste={this._onPaste}
             onSelect={this._onSelect}
-            ref={ref => (this.editor = ref)}
+            ref={(ref) => (this.editor = ref)}
             role={readOnly ? null : ariaRole}
             spellCheck={allowSpellCheck && this.props.spellCheck}
             style={contentStyle}
@@ -340,7 +340,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
    * programmatically. We only care about selection events that occur because
    * of browser interaction, not re-renders and forced selections.
    */
-  componentWillUpdate(nextProps: DraftEditorProps): void {
+  UNSAFE_componentWillUpdate(nextProps: DraftEditorProps): void {
     this._blockSelectEvents = true;
     this._latestEditorState = nextProps.editorState;
   }
@@ -360,7 +360,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
    * be restored to a known position).
    */
   focus = (scrollPosition?: DraftScrollPosition): void => {
-    const { editorState } = this.props;
+    const {editorState} = this.props;
     const alreadyHasFocus = editorState.getSelection().getHasFocus();
     const editorNode = ReactDOM.findDOMNode(this.editor);
 
@@ -371,7 +371,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
     }
 
     const scrollParent = Style.getScrollParent(editorNode);
-    const { x, y } = scrollPosition || getScrollPosition(scrollParent);
+    const {x, y} = scrollPosition || getScrollPosition(scrollParent);
 
     invariant(
       editorNode instanceof HTMLElement,
@@ -431,7 +431,7 @@ class DraftEditor extends React.Component<DraftEditorProps, State> {
    * our EditorState.
    */
   restoreEditorDOM = (scrollPosition?: DraftScrollPosition): void => {
-    this.setState({ contentsKey: this.state.contentsKey + 1 }, () => {
+    this.setState({contentsKey: this.state.contentsKey + 1}, () => {
       this.focus(scrollPosition);
     });
   };
